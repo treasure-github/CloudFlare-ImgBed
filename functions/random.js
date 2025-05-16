@@ -20,8 +20,10 @@ export async function onRequest(context) {
     allowRandom = othersConfig.randomImageAPI.enabled;
 
     // 检查是否启用了随机图功能
-    if (allowRandom != true && env.RANDOM_TOKEN != requestUrl.searchParams.get('token')) {
+    if (allowRandom != true) {
         return new Response(JSON.stringify({ error: "Random is disabled" }), { status: 403 });
+    }else if(env.RANDOM_TOKEN != requestUrl.searchParams.get('token')) {
+        return new Response(JSON.stringify({ error: "You are blocked" }), { status: 403 });
     }
 
     // 检查是否配置了KV数据库
