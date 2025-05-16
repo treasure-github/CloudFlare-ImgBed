@@ -142,17 +142,10 @@ export async function onRequestPost(context) {  // Contents of context object
         TimeStamp: time,
         Label: "None"
     }
-    try{
-        if (fileType && fileType.startsWith("image/")) {
-            metadata.width = formdata.get('width')
-            metadata.height = formdata.get('height')
-            console.log(`宽: ${formdata.get('width')}, 高: ${formdata.get('height')}`);
-        }
-    }catch(e){
-        console.log('===========',e)
+    if (fileType && fileType.startsWith("image/")) {
+        metadata.width = formdata.get('width')
+        metadata.height = formdata.get('height')
     }
-
-
     // 检查fileType和fileName是否存在
     if (fileType === null || fileType === undefined || fileName === null || fileName === undefined) {
         return new Response('Error: fileType or fileName is wrong, check the integrity of this file!', { status: 400 });
